@@ -1,5 +1,12 @@
 Changes
 =======
+Version v1.0.1 (released 2018-03-08):
+
+- Fixes schema location url for DataCite v4.1
+
+Version v1.0.0 (released 2018-02-28):
+
+- Adds full support for DataCite Metadata Schema v4.1 XML generation.
 
 Version v0.3.0 (released 2016-11-18):
 
