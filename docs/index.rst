@@ -70,6 +70,12 @@ DataCite v4.1 XML generation
 .. automodule:: datacite.schema41
    :members: dump_etree, tostring, validate
 
+DataCite v4.2 XML generation
+============================
+
+.. automodule:: datacite.schema42
+   :members: dump_etree, tostring, validate
+
 .. include:: ../CHANGES.rst
 
 .. include:: ../CONTRIBUTING.rst
@@ -78,5 +84,11 @@ License
 =======
 
 .. include:: ../LICENSE
+
+.. note::
+
+    In applying this license, CERN does not waive the privileges and immunities
+    granted to it by virtue of its status as an Intergovernmental Organization
+    or submit itself to any jurisdiction.
 
 .. include:: ../AUTHORS.rst
