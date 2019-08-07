@@ -56,13 +56,15 @@ def validate(data):
     return validator.is_valid(data)
 
 
-@rules.rule('identifier')
-def identifier(path, value):
+@rules.rule('identifiers')
+def identifiers(root, value):
     """Transform identifier."""
-    return E.identifier(
+    root = E.identifiers()
+    root.append(E.identifier(
         value['identifier'],
         identifierType=value['identifierType']
-    )
+    ))
+    return root
 
 
 def affiliations(root, values):
