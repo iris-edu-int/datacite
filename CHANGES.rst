@@ -1,5 +1,17 @@
 Changes
 =======
+Version v1.1.0 (TBD):
+
+- Adds full support for DataCite Metadata Schema v4.2 XML generation.
+- Uses Official DataCite JSON Schema, which has the following notable changes
+  from the previous schema
+    - Uses "identifiers" which is a combination of the XML "identifier" and
+      "alternativeIdentifiers" elements
+    - "creatorName" is now "name"
+    - "affiations" is now "affiliation" (is still an array)
+    - "contributorName" is now "name"
+    - There is not longer a funder identifier object
+
 Version v1.0.1 (released 2018-03-08):
 
 - Fixes schema location url for DataCite v4.1
