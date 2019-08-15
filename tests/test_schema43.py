@@ -64,11 +64,9 @@ TEST_JSON_FILES = [
     'data/4.3/datacite-example-ResourceTypeGeneral_Collection-v4.json',
     'data/4.3/datacite-example-HasMetadata-v4.json',
     'data/4.3/datacite-example-workflow-v4.json',
-    'data/4.3/datacite-example-full-v4.json',
     'data/4.3/datacite-example-GeoLocation-v4.json',
     'data/4.3/datacite-example-relationTypeIsIdenticalTo-v4.json',
     'data/4.3/datacite-example-software-v4.json',
-    'data/4.3/datacite-example-DateRange-v4.json',
     'data/datacite-v4.3-full-example.json',
 ]
 
@@ -103,16 +101,12 @@ FILE_PAIRS = [
      'data/4.3/datacite-example-HasMetadata-v4.json'),
     ('data/4.3/datacite-example-workflow-v4.xml',
      'data/4.3/datacite-example-workflow-v4.json'),
-    ('data/4.3/datacite-example-full-v4.xml',
-     'data/4.3/datacite-example-full-v4.json'),
     ('data/4.3/datacite-example-GeoLocation-v4.xml',
      'data/4.3/datacite-example-GeoLocation-v4.json'),
     ('data/4.3/datacite-example-relationTypeIsIdenticalTo-v4.xml',
      'data/4.3/datacite-example-relationTypeIsIdenticalTo-v4.json'),
     ('data/4.3/datacite-example-software-v4.xml',
      'data/4.3/datacite-example-software-v4.json'),
-    ('data/4.3/datacite-example-DateRange-v4.xml',
-     'data/4.3/datacite-example-DateRange-v4.json'),
     ('data/datacite-v4.3-full-example.xml',
      'data/datacite-v4.3-full-example.json'),
 ]
@@ -189,7 +183,7 @@ def test_creators(minimal_json43):
             },
         ]
     }]}
-    validate_json(minimal_json42, data)
+    validate_json(minimal_json43, data)
 
     tree = dump_etree(data)
     assert len(tree.xpath('/resource/creators/creator/creatorName')) == 1
@@ -199,7 +193,7 @@ def test_creators(minimal_json43):
     assert len(tree.xpath('/resource/creators/creator/affiliation')) == 2
 
 
-def test_titles(minimal_json42):
+def test_titles(minimal_json43):
     """Test titles."""
     pytest.raises(TypeError, dump_etree, {'titles': {'invalid': 'data'}})
 
@@ -215,7 +209,7 @@ def test_titles(minimal_json42):
     data = {'titles': [
         {'title': 'Test', 'titleType': 'Subtitle'}
     ]}
-    validate_json(minimal_json42, data)
+    validate_json(minimal_json43, data)
 
     elem = dump_etree(data).xpath('/resource/titles/title')[0]
     assert elem.text == 'Test'

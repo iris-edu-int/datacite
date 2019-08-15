@@ -94,9 +94,12 @@ def identifiers(root, values):
 
 def affiliations(root, values):
     """Extract affiliation."""
-    vals = values.get('affiliations', [])
+    vals = values.get('affiliation', [])
     for val in vals:
-        elem = E.affiliation(val['affiliation'])
+        elem = E.affiliation(val['name'])
+        if val.get('affiliationIdentifier'):
+            elem.set('affiliationIdentifierScheme', val['affiliationIdentifierScheme'])
+            set_elem_attr(elem, 'affiliationIdentifier', val)
         root.append(elem)
 
 
