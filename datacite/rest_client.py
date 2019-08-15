@@ -81,7 +81,7 @@ class DataCiteRESTClient(object):
             raise DataCiteError.factory(r.code, r.data)
 
     def draft_doi(self, new_doi=None):
-        """Create a draft doi
+        """Create a draft doi.
 
         If new_doi is not provided, DataCite
         will automatically create a DOI with a random, 
