@@ -21,6 +21,7 @@ from datacite.errors import DataCiteForbiddenError, DataCiteGoneError, \
     DataCiteUnauthorizedError
 
 
+@pytest.mark.pw
 @responses.activate
 def test_doi_get_200():
     """Test."""
@@ -36,6 +37,7 @@ def test_doi_get_200():
     assert url == d.doi_get("10.1234/1")
 
 
+@pytest.mark.pw
 @responses.activate
 def test_doi_get_204():
     """Test."""
@@ -53,6 +55,7 @@ def test_doi_get_204():
     assert responses.calls[0].response.url.split('?')[-1] == 'testMode=1'
 
 
+@pytest.mark.pw
 @responses.activate
 def test_doi_get_401():
     """Test."""
@@ -68,6 +71,7 @@ def test_doi_get_401():
         d.doi_get("10.1234/1")
 
 
+@pytest.mark.pw
 @responses.activate
 def test_doi_get_403():
     """Test."""
@@ -83,6 +87,7 @@ def test_doi_get_403():
         d.doi_get("10.1234/1")
 
 
+@pytest.mark.pw
 @responses.activate
 def test_doi_get_404():
     """Test."""
@@ -98,6 +103,7 @@ def test_doi_get_404():
         d.doi_get("10.1234/1")
 
 
+@pytest.mark.pw
 @responses.activate
 def test_doi_get_410():
     """Test."""
@@ -113,6 +119,7 @@ def test_doi_get_410():
         d.doi_get("10.1234/1")
 
 
+@pytest.mark.pw
 @responses.activate
 def test_doi_get_500():
     """Test."""
