@@ -2,7 +2,7 @@ Changes
 =======
 Version v1.1.0 (TBD):
 
-- Adds full support for DataCite Metadata Schema v4.2 XML generation.
+- Adds full support for DataCite Metadata Schema v4.2 and v4.3 XML generation.
 - Uses Official DataCite JSON Schema, which has the following notable changes
   from the previous schema:
   
