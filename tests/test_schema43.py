@@ -163,13 +163,11 @@ def test_creators(minimal_json43):
         'name': 'Smith, John',
         'familyName': 'Smith',
         'givenName': 'John',
-        "affiliation": [
-        {
+        "affiliation": [{
           "name": "DataCite",
           "affiliationIdentifier": "https://ror.org/04wxnsj81",
           "affiliationIdentifierScheme": "ROR"
-        },
-         {
+        }, {
           "name": "DataCite2",
           "affiliationIdentifier": "https://ror.org/04wxnsj81",
           "affiliationIdentifierScheme": "ROR"
@@ -298,8 +296,7 @@ def test_contributors(minimal_json42):
         'familyName': 'Smith',
         'givenName': 'John',
         'contributorType': 'ContactPerson',
-        "affiliation": [
-        {
+        "affiliation": [{
           "name": "DataCite",
           "affiliationIdentifier": "https://ror.org/04wxnsj81",
           "affiliationIdentifierScheme": "ROR"
