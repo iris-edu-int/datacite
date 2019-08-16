@@ -53,3 +53,11 @@ Running the test suite is as simple as: ::
 
     pip install -e .[all]
     ./run-tests.sh
+
+Some tests require a DataCite Test Account.  
+Set the following environment variables 
+$DATACITE_USER, $DATACITE_PW, $DATACITE_PREFIX 
+with your account information for doi.test.datacite.org and
+run: ::
+
+    ./run-tests-pw.sh

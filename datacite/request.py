@@ -13,6 +13,7 @@
 
 from __future__ import absolute_import, print_function
 
+import json
 import ssl
 
 import requests
@@ -89,6 +90,10 @@ class DataCiteRequest(object):
             self.data = res.content
             if not isinstance(body, string_types):
                 self.data = self.data.decode('utf8')
+            try:
+                self.json = json.loads(self.data)
+            except ValueError as e:
+                self.json = None
         except RequestException as e:
             raise HttpError(e)
         except ssl.SSLError as e:

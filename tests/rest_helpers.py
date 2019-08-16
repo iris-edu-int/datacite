@@ -14,8 +14,9 @@ from __future__ import absolute_import, print_function
 
 from datacite import DataCiteRESTClient
 
-def get_rest(username="DC", password="pw", 
-               test_mode=TRrue, timeout=None):
+
+def get_rest(username="DC", password="pw",
+             test_mode=True, timeout=None):
     """Create a API client."""
     return DataCiteRESTClient(
         username=username,
