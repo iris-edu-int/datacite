@@ -68,6 +68,7 @@ class DataCiteRequest(object):
 
         if self.base_url:
             url = self.base_url + url
+        print(url)
 
         if body and isinstance(body, text_type):
             body = body.encode('utf-8')

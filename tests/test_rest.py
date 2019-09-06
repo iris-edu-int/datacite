@@ -47,10 +47,10 @@ def test_rest_get_200():
 
 @responses.activate
 def test_doi_get_204():
-    """Test."""
+    """Test 204 error and test_mode setting."""
     responses.add(
         responses.GET,
-        "https://doi.test.datacite.org/dois/10.1234/1".format(RESTURL),
+        "https://api.test.datacite.org/dois/10.1234/1".format(RESTURL),
         body="No Content",
         status=204,
     )

@@ -15,6 +15,8 @@ API documentation is available on https://mds.datacite.org/static/apidoc.
 
 from __future__ import absolute_import, print_function
 
+import json
+
 from .errors import DataCiteError
 from .request import DataCiteRequest
 
@@ -44,9 +46,9 @@ class DataCiteRESTClient(object):
         self.api_ver = api_ver  # Currently not used
 
         if test_mode:
-            self.api_url = 'https://doi.test.datacite.org/'
+            self.api_url = 'https://api.test.datacite.org/'
         else:
-            self.api_url = url or 'https://doi.datacite.org/'
+            self.api_url = url or 'https://api.datacite.org/'
         if self.api_url[-1] != '/':
             self.api_url = self.api_url + "/"
         print(self.api_url)
@@ -101,9 +103,11 @@ class DataCiteRESTClient(object):
 
     def post_doi(self, data):
         """Post a JSON payload to DataCite."""
-        headers = {'Content-Type': 'content-type: application/vnd.api+json'}
+        headers = {'content-type': 'application/vnd.api+json'}
         r = self._request_factory()
-        r.post("dois", body={"data":data}, headers=headers)
+        body = {"data":data}
+        print(body)
+        r.post("dois", body=json.dumps(body), headers=headers)
     
         if r.code == 201:
             return r.data
