@@ -68,7 +68,6 @@ class DataCiteRequest(object):
 
         if self.base_url:
             url = self.base_url + url
-        print(url)
 
         if body and isinstance(body, text_type):
             body = body.encode('utf-8')
@@ -81,6 +80,8 @@ class DataCiteRequest(object):
         )
 
         if method == 'POST':
+            kwargs['data'] = body
+        if method == 'PUT':
             kwargs['data'] = body
         if self.timeout is not None:
             kwargs['timeout'] = self.timeout
@@ -111,6 +112,13 @@ class DataCiteRequest(object):
         params = params or {}
         headers = headers or {}
         return self.request(url, method="POST", body=body, params=params,
+                            headers=headers)
+
+    def put(self, url, body=None, params=None, headers=None):
+        """Make a PUT request."""
+        params = params or {}
+        headers = headers or {}
+        return self.request(url, method="PUT", body=body, params=params,
                             headers=headers)
 
     def delete(self, url, params=None, headers=None):

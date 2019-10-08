@@ -15,6 +15,7 @@ API documentation is available on https://mds.datacite.org/static/apidoc.
 
 from __future__ import absolute_import, print_function
 
+from idutils import normalize_doi
 import json
 
 from .errors import DataCiteError
@@ -51,7 +52,6 @@ class DataCiteRESTClient(object):
             self.api_url = url or 'https://api.datacite.org/'
         if self.api_url[-1] != '/':
             self.api_url = self.api_url + "/"
-        print(self.api_url)
 
         self.timeout = timeout
 
@@ -79,12 +79,11 @@ class DataCiteRESTClient(object):
         r = self._request_factory()
         r.get("dois/" + doi)
         if r.code == 200:
-            print(r.json)
             return r.json['data']['attributes']['url']
         else:
             raise DataCiteError.factory(r.code, r.data)
 
-    def check_doi(doi, prefix):
+    def check_doi(self,doi):
         """Check doi structure.
         
         Check that the doi has a form
@@ -93,12 +92,12 @@ class DataCiteRESTClient(object):
         #If prefix is in doi
         if '/' in doi:
             split = doi.split('/')
-            if split[0] != prefix:
+            if split[0] != self.prefix:
                 #Provided a DOI with the wrong prefix
                 raise ValueError
         else:
-            doi = prefix +'/'+doi
-        return doi
+            doi = self.prefix +'/'+doi
+        return normalize_doi(doi)
 
 
     def post_doi(self, data):
@@ -106,10 +105,21 @@ class DataCiteRESTClient(object):
         headers = {'content-type': 'application/vnd.api+json'}
         r = self._request_factory()
         body = {"data":data}
-        print(body)
         r.post("dois", body=json.dumps(body), headers=headers)
     
         if r.code == 201:
+            return r.data
+        else:
+            raise DataCiteError.factory(r.code, r.data)
+
+    def put_doi(self, doi, data):
+        """Post a JSON payload to DataCite."""
+        headers = {'content-type': 'application/vnd.api+json'}
+        r = self._request_factory()
+        body = {"data":data}
+        r.put("dois/"+doi, body=json.dumps(body), headers=headers)
+
+        if r.code == 200:
             return r.data
         else:
             raise DataCiteError.factory(r.code, r.data)
@@ -130,6 +140,19 @@ class DataCiteRESTClient(object):
             data = {"attributes":{"doi":doi}}
 
         return self.post_doi(data)
+
+    def update_url(self, doi, url):
+        """Update the url of a doi.
+
+        :param url: URL where the doi will resolve.
+        :param doi: DOI (e.g. 10.123/456)
+        :return:
+        """
+        doi = self.check_doi(doi)
+        data = {"attributes": {"url": url}}
+
+        return self.put_doi(doi,data)
+
 
     def publish_doi(self, metadata, doi=None):
         """Publish a doi.
