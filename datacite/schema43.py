@@ -58,7 +58,7 @@ def validate(data):
 
 @rules.rule('identifiers')
 def identifiers(root, values):
-    """Transform identifiers to alternateIdenftifiers and identifier."""
+    """Transform identifiers to alternateIdenfifiers and identifier."""
     """
     We assume there will only be 1 DOI identifier for the record.
     Any other identifiers are alternative identifiers.
@@ -85,7 +85,7 @@ def identifiers(root, values):
         #If we only have the DOI
         return doi
     else:
-        return (root,doi)
+        return root, doi
 
 
 def affiliations(root, values):
@@ -115,7 +115,7 @@ def givenname(root, value):
         root.append(E.givenName(val))
 
 
-def person_or_org_name(root, value, xml_tagname,json_tagname):
+def person_or_org_name(root, value, xml_tagname, json_tagname):
     """Extract creator/contributor name and it's 'nameType' attribute."""
     elem = E(xml_tagname, value[json_tagname])
     set_elem_attr(elem, 'nameType', value)
