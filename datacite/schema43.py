@@ -90,13 +90,15 @@ def identifiers(root, values):
 
 def affiliations(root, values):
     """Extract affiliation."""
-    vals = values.get('affiliation', [])
+    vals = values.get('affiliations', [])
     for val in vals:
-        elem = E.affiliation(val['name'])
-        if val.get('affiliationIdentifier'):
-            elem.set('affiliationIdentifierScheme', val['affiliationIdentifierScheme'])
+        if val.get('affiliation'):
+            elem = E.affiliation(val['affiliation'])
+            # affiliationIdentifier metadata as Attributes (0-1 cardinality, instead of 0-n as list of objects)
             set_elem_attr(elem, 'affiliationIdentifier', val)
-        root.append(elem)
+            set_elem_attr(elem, 'affiliationIdentifierScheme', val)
+            set_elem_attr(elem, 'schemeURI', val)
+            root.append(elem)
 
 
 def familyname(root, value):
