@@ -11,6 +11,7 @@ Version v1.1.0 (TBD):
   - "creatorName" is now "name"
   - "contributorName" is now "name"
   - "affiliations" is now "affiliation" (is still an array)
+  - "affilition" is now "name"
   - There is no longer a funder identifier object (the identifier and type are just
     elements)
 

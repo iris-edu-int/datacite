@@ -190,6 +190,14 @@ def test_creators(minimal_json43):
     assert len(tree.xpath('/resource/creators/creator/nameIdentifier')) == 1
     assert len(tree.xpath('/resource/creators/creator/affiliation')) == 2
 
+    elem = dump_etree(data).xpath('/resource/creators/creator/affiliation')[0]
+    assert elem.text == 'DataCite'
+    assert elem.get('affiliationIdentifier') == 'https://ror.org/04wxnsj81'
+
+    elem = dump_etree(data).xpath('/resource/creators/creator/affiliation')[1]
+    assert elem.text == 'DataCite2'
+    assert elem.get('affiliationIdentifier') == 'https://ror.org/04wxnsj81'
+
 
 def test_titles(minimal_json43):
     """Test titles."""

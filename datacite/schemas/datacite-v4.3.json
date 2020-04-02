@@ -22,12 +22,12 @@
             },
             "uniqueItems": true
         },
-        "affiliations": {
+        "affiliation": {
             "type": "array",
             "items": {
                 "type": "object",
                 "properties": {
-                    "affiliation": {"type": "string"},
+                    "name": {"type": "string"},
                     "affiliationIdentifier": {"type": "string"},
                     "affiliationIdentifierScheme": {"type": "string"},
                     "schemeURI": {"type": "string", "format": "uri"}

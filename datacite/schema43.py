@@ -58,7 +58,7 @@ def validate(data):
 
 @rules.rule('identifiers')
 def identifiers(root, values):
-    """Transform identifiers to alternateIdenfifiers and identifier."""
+    """Transform identifiers to alternateIdentifiers and identifier."""
     """
     We assume there will only be 1 DOI identifier for the record.
     Any other identifiers are alternative identifiers.
@@ -90,10 +90,10 @@ def identifiers(root, values):
 
 def affiliations(root, values):
     """Extract affiliation."""
-    vals = values.get('affiliations', [])
+    vals = values.get('affiliation', [])
     for val in vals:
-        if val.get('affiliation'):
-            elem = E.affiliation(val['affiliation'])
+        if val.get('name'):
+            elem = E.affiliation(val['name'])
             # affiliationIdentifier metadata as Attributes (0-1 cardinality, instead of 0-n as list of objects)
             set_elem_attr(elem, 'affiliationIdentifier', val)
             set_elem_attr(elem, 'affiliationIdentifierScheme', val)
