@@ -15,8 +15,9 @@ API documentation is available on https://mds.datacite.org/static/apidoc.
 
 from __future__ import absolute_import, print_function
 
-from idutils import normalize_doi
 import json
+
+from idutils import normalize_doi
 
 from .errors import DataCiteError
 from .request import DataCiteRequest
