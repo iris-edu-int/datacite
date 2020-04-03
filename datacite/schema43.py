@@ -9,7 +9,7 @@
 # under the terms of the Revised BSD License; see LICENSE file for
 # more details.
 
-"""DataCite v4.2 JSON to XML transformations."""
+"""DataCite v4.3 JSON to XML transformations."""
 
 from __future__ import absolute_import, print_function
 
@@ -32,33 +32,33 @@ ns = {
 root_attribs = {
     '{http://www.w3.org/2001/XMLSchema-instance}schemaLocation':
     'http://datacite.org/schema/kernel-4 '
-    'http://schema.datacite.org/meta/kernel-4.2/metadata.xsd',
+    'http://schema.datacite.org/meta/kernel-4.3/metadata.xsd',
 }
 
 validator = validator_factory(pkg_resources.resource_filename(
     'datacite',
-    'schemas/datacite-v4.2.json'
+    'schemas/datacite-v4.3.json'
 ))
 
 
 def dump_etree(data):
-    """Convert JSON dictionary to DataCite v4.2 XML as ElementTree."""
+    """Convert JSON dictionary to DataCite v4.3 XML as ElementTree."""
     return dump_etree_helper(data, rules, ns, root_attribs)
 
 
 def tostring(data, **kwargs):
-    """Convert JSON dictionary to DataCite v4.2 XML as string."""
+    """Convert JSON dictionary to DataCite v4.3 XML as string."""
     return etree_to_string(dump_etree(data), **kwargs)
 
 
 def validate(data):
-    """Validate DataCite v4.2 JSON dictionary."""
+    """Validate DataCite v4.3 JSON dictionary."""
     return validator.is_valid(data)
 
 
 @rules.rule('identifiers')
 def identifiers(root, values):
-    """Transform identifiers to alternateIdenftifiers and identifier."""
+    """Transform identifiers to alternateIdentifiers and identifier."""
     """
     We assume there will only be 1 DOI identifier for the record.
     Any other identifiers are alternative identifiers.
@@ -85,15 +85,20 @@ def identifiers(root, values):
         #If we only have the DOI
         return doi
     else:
-        return (root,doi)
+        return root, doi
 
 
 def affiliations(root, values):
     """Extract affiliation."""
-    vals = values.get('affiliations', [])
+    vals = values.get('affiliation', [])
     for val in vals:
-        elem = E.affiliation(val['affiliation'])
-        root.append(elem)
+        if val.get('name'):
+            elem = E.affiliation(val['name'])
+            # affiliationIdentifier metadata as Attributes (0-1 cardinality, instead of 0-n as list of objects)
+            set_elem_attr(elem, 'affiliationIdentifier', val)
+            set_elem_attr(elem, 'affiliationIdentifierScheme', val)
+            set_elem_attr(elem, 'schemeURI', val)
+            root.append(elem)
 
 
 def familyname(root, value):
@@ -110,7 +115,7 @@ def givenname(root, value):
         root.append(E.givenName(val))
 
 
-def person_or_org_name(root, value, xml_tagname,json_tagname):
+def person_or_org_name(root, value, xml_tagname, json_tagname):
     """Extract creator/contributor name and it's 'nameType' attribute."""
     elem = E(xml_tagname, value[json_tagname])
     set_elem_attr(elem, 'nameType', value)
