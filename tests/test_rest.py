@@ -33,6 +33,7 @@ def test_rest_create_draft():
     url = 'https://github.com/inveniosoftware/datacite'
     new_url = d.update_url(doi, url)
     assert new_url == url
+    d.delete_doi(doi)
 
 
 @responses.activate
@@ -62,6 +63,13 @@ def test_rest_create_draft_mock():
     )
     new_url = d.update_url(doi, mock)
     assert new_url == mock
+
+    responses.add(
+        responses.DELETE,
+        "{0}dois/10.1234/1".format(RESTURL),
+        status=204,
+    )
+    d.delete_doi(doi)
 
 
 @pytest.mark.parametrize('example_json43', TEST_43_JSON_FILES)

@@ -242,6 +242,22 @@ class DataCiteRESTClient(object):
         return self.post_doi(data)
 
 
+    def show_doi(self, doi):
+        """Show a previously registered DOI.
+
+        This DOI will be found in DataCite Search
+
+        :param doi: DOI to hide e.g. 10.12345/1.
+        :return:
+        """
+        data = {"attributes":{"event":"publish"}}
+        if doi:
+            doi = self.check_doi(doi)
+            data["attributes"]["doi"] = doi
+
+        return self.post_doi(data)
+
+
     def metadata_get(self, doi):
         """Get the JSON metadata associated to a DOI name.
 
