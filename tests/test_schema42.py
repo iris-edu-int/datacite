@@ -13,33 +13,14 @@
 
 from __future__ import absolute_import, print_function, unicode_literals
 
-import glob
-import io
-import json
 import xml.etree.ElementTree as ET
-from os.path import dirname, join
 
 import pytest
+from helpers import load_json_path, load_xml_path
 from lxml import etree
 
 from datacite.schema42 import dump_etree, tostring, validate, validator
 from datacite.xmlutils import etree_to_string
-
-
-def load_xml_path(path):
-    """Helper method for loading an XML example file from a path."""
-    path_base = dirname(__file__)
-    with io.open(join(path_base, path), encoding='utf-8') as file:
-        content = file.read()
-    return content
-
-
-def load_json_path(path):
-    """Helper method for loading a JSON example file from a path."""
-    path_base = dirname(__file__)
-    with io.open(join(path_base, path), encoding='utf-8') as file:
-        content = file.read()
-    return json.loads(content)
 
 
 def validate_json(minimal_json, extra_json):
@@ -48,6 +29,7 @@ def validate_json(minimal_json, extra_json):
     data.update(minimal_json)
     data.update(extra_json)
     validator.validate(data)
+
 
 #
 # Tests on example files
