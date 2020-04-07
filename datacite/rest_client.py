@@ -102,26 +102,27 @@ class DataCiteRESTClient(object):
 
 
     def post_doi(self, data):
-        """Post a JSON payload to DataCite."""
+        """Post a new JSON payload to DataCite."""
         headers = {'content-type': 'application/vnd.api+json'}
         r = self._request_factory()
         body = {"data":data}
         r.post("dois", body=json.dumps(body), headers=headers)
     
+        print(r.code)
         if r.code == 201:
-            return r.data
+            return r.json['data']['id']
         else:
             raise DataCiteError.factory(r.code, r.data)
 
     def put_doi(self, doi, data):
-        """Post a JSON payload to DataCite."""
+        """Put a JSON payload to DataCite for an existing DOI."""
         headers = {'content-type': 'application/vnd.api+json'}
         r = self._request_factory()
         body = {"data":data}
         r.put("dois/"+doi, body=json.dumps(body), headers=headers)
 
         if r.code == 200:
-            return r.data
+            return r.json
         else:
             raise DataCiteError.factory(r.code, r.data)
 
@@ -131,7 +132,7 @@ class DataCiteRESTClient(object):
 
         A draft DOI can be deleted
 
-        If new_doi is not provided, DataCite
+        If doi is not provided, DataCite
         will automatically create a DOI with a random, 
         recommended DOI suffix
         """
@@ -139,7 +140,7 @@ class DataCiteRESTClient(object):
         if doi:
             doi = self.check_doi(doi,self.prefix)
             data = {"attributes":{"doi":doi}}
-
+        
         return self.post_doi(data)
 
     def update_url(self, doi, url):
@@ -152,11 +153,12 @@ class DataCiteRESTClient(object):
         doi = self.check_doi(doi)
         data = {"attributes": {"url": url}}
 
-        return self.put_doi(doi,data)
+        result = self.put_doi(doi,data)
+        return result['data']['attributes']['url']
 
 
-    def publish_doi(self, metadata, doi=None):
-        """Publish a doi.
+    def public_doi(self, metadata, url, doi=None):
+        """Create a public doi.
 
         This DOI will be public and cannot be deleted
 
@@ -173,6 +175,7 @@ class DataCiteRESTClient(object):
         data = {"attributes":metadata}
         data["attributes"]["prefix"] =self.prefix
         data["attributes"]["event"]="publish"
+        data["attributes"]["url"]=url
         if doi:
             doi = self.check_doi(doi)
             data["attributes"]["doi"] = doi
