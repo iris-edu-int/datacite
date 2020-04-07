@@ -103,6 +103,24 @@ def test_rest_create_public_mock():
     assert datacite_prefix == prefix
 
 
+@pytest.mark.pw
+def test_rest_create_private(example_json43):
+    """Test creating private DOI"""
+    example_json43 = 'data/4.3/datacite-example-dataset-v4.json'
+    example_metadata = load_json_path(example_json43)
+    # We cannot use the example DOIs
+    example_metadata.pop('doi')
+    url = 'https://github.com/inveniosoftware/datacite'
+    username, password, prefix = get_credentials()
+    d = get_rest(username=username, password=password,
+                 prefix=prefix, test_mode=True)
+    doi = d.private_doi(example_metadata, url)
+    datacite_prefix = doi.split('/')[0]
+    assert datacite_prefix == prefix
+    datacite_metadata = d.metadata_get(doi)
+    assert datacite_metadata['state'] == 'registered'
+
+
 @responses.activate
 def test_rest_get_200():
     """Test."""
