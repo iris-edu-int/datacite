@@ -3,14 +3,15 @@
 # This file is part of DataCite.
 #
 # Copyright (C) 2015 CERN.
+# Copyright (C) 2020 Caltech.
 #
 # DataCite is free software; you can redistribute it and/or modify it
 # under the terms of the Revised BSD License; see LICENSE file for
 # more details.
 
-"""Python API client wrapper for the DataCite Metadata Store API.
+"""Python API client wrapper for the DataCite Rest API.
 
-API documentation is available on https://mds.datacite.org/static/apidoc.
+API documentation is available on https://support.datacite.org/reference/introduction.
 """
 
 from __future__ import absolute_import, print_function
@@ -58,7 +59,7 @@ class DataCiteRESTClient(object):
 
     def __repr__(self):
         """Create string representation of object."""
-        return '<DataCiteMDSClient: {0}>'.format(self.username)
+        return '<DataCiteRESTClient: {0}>'.format(self.username)
 
     def _request_factory(self):
         """Create a new Request object."""
