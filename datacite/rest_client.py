@@ -123,12 +123,12 @@ class DataCiteRESTClient(object):
         r.put("dois/"+doi, body=json.dumps(body), headers=headers)
 
         if r.code == 200:
-            return r.json
+            return r.json['data']['attributes']
         else:
             raise DataCiteError.factory(r.code, r.data)
 
 
-    def draft_doi(self, doi=None):
+    def draft_doi(self, metadata=None, doi=None):
         """Create a draft doi.
 
         A draft DOI can be deleted
@@ -136,8 +136,14 @@ class DataCiteRESTClient(object):
         If doi is not provided, DataCite
         will automatically create a DOI with a random, 
         recommended DOI suffix
+
+        :param doi: DOI (e.g. 10.123/456)
+        :return:
         """
-        data = {"attributes":{"prefix":self.prefix}}
+        data = {"attributes":{}}
+        if metadata:
+            data['attributes'] = metadata
+        data["attributes"]["prefix"] = self.prefix
         if doi:
             doi = self.check_doi(doi,self.prefix)
             data = {"attributes":{"doi":doi}}
@@ -155,13 +161,16 @@ class DataCiteRESTClient(object):
         data = {"attributes": {"url": url}}
 
         result = self.put_doi(doi,data)
-        return result['data']['attributes']['url']
+        return result['url']
 
     
     def delete_doi(self, doi):
         """Delete a doi.
 
         This will only work for draft dois
+
+        :param doi: DOI (e.g. 10.123/456)
+        :return:
         """
         r = self._request_factory()
         r.delete("dois/"+doi)
@@ -183,6 +192,8 @@ class DataCiteRESTClient(object):
         http://schema.datacite.org/
 
         :param metadata: JSON format of the metadata.
+        :param doi: DOI (e.g. 10.123/456)
+        :param url: URL where the doi will resolve.
         :return:
         """
         data = {"attributes":metadata}
@@ -194,6 +205,24 @@ class DataCiteRESTClient(object):
             data["attributes"]["doi"] = doi
         
         return self.post_doi(data)
+
+
+    def update_doi(self,doi,metadata=None,url=None):
+        """Update the metadata or url for a DOI.
+        
+        :param url: URL where the doi will resolve.
+        :param metadata: JSON format of the metadata.
+        :return:
+        """
+        data = {"attributes":{}}
+        doi = self.check_doi(doi)
+        data["attributes"]["doi"] = doi
+        if metadata:
+            data['attributes'] = metadata
+        if url:
+            data["attributes"]["url"]=url
+        
+        return self.put_doi(doi,data)
 
 
     def private_doi(self, metadata, url, doi=None):
@@ -239,7 +268,7 @@ class DataCiteRESTClient(object):
             doi = self.check_doi(doi)
             data["attributes"]["doi"] = doi
 
-        return self.post_doi(data)
+        return self.put_doi(doi,data)
 
 
     def show_doi(self, doi):
@@ -255,7 +284,7 @@ class DataCiteRESTClient(object):
             doi = self.check_doi(doi)
             data["attributes"]["doi"] = doi
 
-        return self.post_doi(data)
+        return self.put_doi(doi,data)
 
 
     def metadata_get(self, doi):
