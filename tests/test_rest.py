@@ -78,8 +78,6 @@ def test_rest_create_draft_mock():
 def test_rest_create_public(example_json43):
     """Test creating DOIs with all example metadata"""
     example_metadata = load_json_path(example_json43)
-    # We cannot use the example DOIs
-    example_metadata.pop('doi')
     url = 'https://github.com/inveniosoftware/datacite'
     username, password, prefix = get_credentials()
     d = get_rest(username=username, password=password,
@@ -137,8 +135,6 @@ def test_rest_create_private():
     """Test creating private DOI"""
     example_json43 = 'data/4.3/datacite-example-dataset-v4.json'
     example_metadata = load_json_path(example_json43)
-    # We cannot use the example DOIs
-    example_metadata.pop('doi')
     url = 'https://github.com/inveniosoftware/datacite'
     username, password, prefix = get_credentials()
     d = get_rest(username=username, password=password,
@@ -175,8 +171,6 @@ def test_rest_create_private_mock():
         json=data,
         status=200,
     )
-    # We cannot use the example DOIs
-    example_metadata.pop('doi')
     # test_mode=False because we already introduced a fake url
     # with RESTURL variable
     d = get_rest(username='mock', password='mock',

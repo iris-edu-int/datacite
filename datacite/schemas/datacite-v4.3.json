@@ -1,6 +1,9 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-
+    "id": "datacite-v4.3.json",
+    "title": "DataCite v4.3",
+    "description": "JSON representation of the DataCite v4.3 schema.",
+    "additionalProperties": false,
     "definitions": {
         "nameType": {
             "type": "string",
@@ -469,6 +472,14 @@
         "schemaVersion": {
             "type": "string",
             "const": "http://datacite.org/schema/kernel-4"
+        },
+        "container": {
+            "type": "object",
+            "properties": {
+                "type": {"type": "string"},
+                "title": {"type": "string"},
+                "firstPage": {"type": "string"}
+            }
         }
     },
 

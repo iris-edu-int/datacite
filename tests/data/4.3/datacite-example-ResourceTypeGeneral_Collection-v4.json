@@ -1,5 +1,4 @@
 {
-  "doi": "10.5072/1003496",
   "types": {
     "resourceTypeGeneral": "Collection",
     "resourceType": "Report",
@@ -29,7 +28,6 @@
     }
   ],
   "publisher": "Scottish Urban Archaeological Trust Ltd.",
-  "container": {},
   "subjects": [
     {
       "subject": "Archaeology",

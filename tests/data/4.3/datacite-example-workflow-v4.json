@@ -1,5 +1,4 @@
 {
-  "doi": "10.5072/100044",
   "types": {
     "resourceTypeGeneral": "Workflow",
     "resourceType": "Software",
@@ -41,7 +40,6 @@
     }
   ],
   "publisher": "GigaScience Database",
-  "container": {},
   "subjects": [
     {
       "subject": "DNA (Genetics)",

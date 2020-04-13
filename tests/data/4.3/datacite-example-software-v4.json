@@ -1,5 +1,4 @@
 {
-  "doi": "10.5072/example-software-2.0",
   "types": {
     "resourceTypeGeneral": "Software",
     "resourceType": "Software",
@@ -65,7 +64,6 @@
     }
   ],
   "publisher": "Apollo - University of Cambridge Repository",
-  "container": {},
   "subjects": [
     {
       "subject": "UHRMS"

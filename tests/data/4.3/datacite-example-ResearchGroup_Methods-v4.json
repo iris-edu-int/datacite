@@ -1,5 +1,4 @@
 {
-  "doi": "10.5072/fk25h7qrs",
   "types": {
     "resourceTypeGeneral": "Dataset",
     "resourceType": "Dataset",
@@ -29,7 +28,6 @@
     }
   ],
   "publisher": "University of California, San Francisco",
-  "container": {},
   "subjects": [
     {
       "subject": "Aging",

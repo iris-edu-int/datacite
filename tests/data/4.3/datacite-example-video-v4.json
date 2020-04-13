@@ -1,5 +1,4 @@
 {
-  "doi": "10.5072/1153992",
   "types": {
     "resourceTypeGeneral": "Audiovisual",
     "resourceType": "narrated video",
@@ -28,7 +27,6 @@
     }
   ],
   "publisher": "Photovoltaic Institute",
-  "container": {},
   "subjects": [
     {
       "subject": "Solar Energy",
