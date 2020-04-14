@@ -13,33 +13,14 @@
 
 from __future__ import absolute_import, print_function, unicode_literals
 
-import glob
-import io
-import json
 import xml.etree.ElementTree as ET
-from os.path import dirname, join
 
 import pytest
+from helpers import TEST_43_JSON_FILES, load_json_path, load_xml_path
 from lxml import etree
 
 from datacite.schema43 import dump_etree, tostring, validate, validator
 from datacite.xmlutils import etree_to_string
-
-
-def load_xml_path(path):
-    """Helper method for loading an XML example file from a path."""
-    path_base = dirname(__file__)
-    with io.open(join(path_base, path), encoding='utf-8') as file:
-        content = file.read()
-    return content
-
-
-def load_json_path(path):
-    """Helper method for loading a JSON example file from a path."""
-    path_base = dirname(__file__)
-    with io.open(join(path_base, path), encoding='utf-8') as file:
-        content = file.read()
-    return json.loads(content)
 
 
 def validate_json(minimal_json, extra_json):
@@ -49,29 +30,8 @@ def validate_json(minimal_json, extra_json):
     data.update(extra_json)
     validator.validate(data)
 
-#
-# Tests on example files
-#
-TEST_JSON_FILES = [
-    'data/4.3/datacite-example-polygon-v4.json',
-    'data/4.3/datacite-example-fundingReference-v4.json',
-    'data/4.3/datacite-example-ResearchGroup_Methods-v4.json',
-    'data/4.3/datacite-example-complicated-v4.json',
-    'data/4.3/datacite-example-datapaper-v4.json',
-    'data/4.3/datacite-example-video-v4.json',
-    'data/4.3/datacite-example-dataset-v4.json',
-    'data/4.3/datacite-example-Box_dateCollected_DataCollector-v4.json',
-    'data/4.3/datacite-example-ResourceTypeGeneral_Collection-v4.json',
-    'data/4.3/datacite-example-HasMetadata-v4.json',
-    'data/4.3/datacite-example-workflow-v4.json',
-    'data/4.3/datacite-example-GeoLocation-v4.json',
-    'data/4.3/datacite-example-relationTypeIsIdenticalTo-v4.json',
-    'data/4.3/datacite-example-software-v4.json',
-    'data/datacite-v4.3-full-example.json',
-]
 
-
-@pytest.mark.parametrize('example_json43', TEST_JSON_FILES)
+@pytest.mark.parametrize('example_json43', TEST_43_JSON_FILES)
 def test_example_json_validates(example_json43):
     """Test the example file validates against the JSON schema."""
     example_json = load_json_path(example_json43)
@@ -176,7 +136,7 @@ def test_creators(minimal_json43):
         'nameIdentifiers': [
             {
                 'nameIdentifier': '1234',
-                'schemeURI': 'http://orcid.org',
+                'schemeUri': 'http://orcid.org',
                 'nameIdentifierScheme': 'orcid',
             },
         ]
@@ -264,8 +224,8 @@ def test_subjects(minimal_json42):
     data = {'subjects': [{
         'subject': 'test',
         'subjectScheme': 'dewey',
-        'schemeURI': 'dewey-uri',
-        'valueURI': 'https://cern.ch'
+        'schemeUri': 'dewey-uri',
+        'valueUri': 'https://cern.ch'
     }]}
     validate_json(minimal_json42, data)
     elem = dump_etree(data).xpath('/resource/subjects/subject')[0]
@@ -313,7 +273,7 @@ def test_contributors(minimal_json42):
         'nameIdentifiers': [
             {
                 'nameIdentifier': '1234',
-                'schemeURI': 'http://orcid.org',
+                'schemeUri': 'http://orcid.org',
                 'nameIdentifierScheme': 'orcid',
             },
         ]
@@ -453,7 +413,7 @@ def test_relatedidentifiers(minimal_json42):
             'relatedIdentifierType': 'DOI',
             'relationType': 'HasMetadata',
             'relatedMetadataScheme': 'MARC21',
-            'schemeURI': 'http://loc.gov',
+            'schemeUri': 'http://loc.gov',
             'schemeType': 'XSD',
             'resourceTypeGeneral': 'Software',
         },
@@ -508,7 +468,7 @@ def test_rights(minimal_json42):
     data = {'rightsList': [
         {
             'rights': 'CC',
-            'rightsURI': 'http://cc.org',
+            'rightsUri': 'http://cc.org',
             'lang': 'en'
         },
     ]}
@@ -546,7 +506,7 @@ def test_fundingreferences(minimal_json42):
         'funderIdentifier': 'id',
         'funderIdentifierType': 'ISNI',
         'awardNumber': '282625',
-        'awardURI': 'https://cern.ch',
+        'awardUri': 'https://cern.ch',
         'awardTitle': 'title'
     }, ]}
     validate_json(minimal_json42, data)

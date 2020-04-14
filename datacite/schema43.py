@@ -97,7 +97,8 @@ def affiliations(root, values):
             # affiliationIdentifier metadata as Attributes (0-1 cardinality, instead of 0-n as list of objects)
             set_elem_attr(elem, 'affiliationIdentifier', val)
             set_elem_attr(elem, 'affiliationIdentifierScheme', val)
-            set_elem_attr(elem, 'schemeURI', val)
+            if val.get('schemeUri'):
+                elem.set('schemeURI', val['schemeUri'])
             root.append(elem)
 
 
@@ -130,7 +131,8 @@ def nameidentifiers(root, values):
         if val.get('nameIdentifier'):
             elem = E.nameIdentifier(val['nameIdentifier'])
             elem.set('nameIdentifierScheme', val['nameIdentifierScheme'])
-            set_elem_attr(elem, 'schemeURI', val)
+            if val.get('schemeUri'):
+                elem.set('schemeURI', val['schemeUri'])
             root.append(elem)
 
 
@@ -201,8 +203,10 @@ def subjects(path, values):
         elem = E.subject(value['subject'])
         set_non_empty_attr(elem, '{xml}lang', value.get('lang'))
         set_elem_attr(elem, 'subjectScheme', value)
-        set_elem_attr(elem, 'schemeURI', value)
-        set_elem_attr(elem, 'valueURI', value)
+        if value.get('schemeUri'):
+            elem.set('schemeURI', value['schemeUri'])
+        if value.get('valueUri'):
+            elem.set('valueURI', value['valueUri'])
         root.append(elem)
     return root
 
@@ -272,7 +276,8 @@ def related_identifiers(path, values):
         elem.set('relatedIdentifierType', value['relatedIdentifierType'])
         elem.set('relationType', value['relationType'])
         set_elem_attr(elem, 'relatedMetadataScheme', value)
-        set_elem_attr(elem, 'schemeURI', value)
+        if value.get('schemeUri'):
+            elem.set('schemeURI', value['schemeUri'])
         set_elem_attr(elem, 'schemeType', value)
         set_elem_attr(elem, 'resourceTypeGeneral', value)
         root.append(elem)
@@ -322,10 +327,12 @@ def rights(path, values):
         #Handle the odd case where no rights text present
         else:
             elem = E.rights()
-        set_elem_attr(elem, 'rightsURI', value)
+        if value.get('rightsUri'):
+            elem.set('rightsURI', value['rightsUri'])
         set_elem_attr(elem, 'rightsIdentifierScheme', value)
         set_elem_attr(elem, 'rightsIdentifier', value)
-        set_elem_attr(elem, 'schemeURI', value)
+        if value.get('schemeUri'):
+            elem.set('schemeURI', value['schemeUri'])
         set_non_empty_attr(elem, '{xml}lang', value.get('lang'))
         root.append(elem)
     return root
@@ -425,7 +432,7 @@ def fundingreferences(path, values):
         number = value.get('awardNumber')
         if number:
             elem = E.awardNumber(number)
-            uri = value.get('awardURI')
+            uri = value.get('awardUri')
             if uri:
                 elem.set('awardURI', uri)
             element.append(elem)
