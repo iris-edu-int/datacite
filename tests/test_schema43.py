@@ -136,7 +136,7 @@ def test_creators(minimal_json43):
         'nameIdentifiers': [
             {
                 'nameIdentifier': '1234',
-                'schemeURI': 'http://orcid.org',
+                'schemeUri': 'http://orcid.org',
                 'nameIdentifierScheme': 'orcid',
             },
         ]
@@ -224,8 +224,8 @@ def test_subjects(minimal_json42):
     data = {'subjects': [{
         'subject': 'test',
         'subjectScheme': 'dewey',
-        'schemeURI': 'dewey-uri',
-        'valueURI': 'https://cern.ch'
+        'schemeUri': 'dewey-uri',
+        'valueUri': 'https://cern.ch'
     }]}
     validate_json(minimal_json42, data)
     elem = dump_etree(data).xpath('/resource/subjects/subject')[0]
@@ -273,7 +273,7 @@ def test_contributors(minimal_json42):
         'nameIdentifiers': [
             {
                 'nameIdentifier': '1234',
-                'schemeURI': 'http://orcid.org',
+                'schemeUri': 'http://orcid.org',
                 'nameIdentifierScheme': 'orcid',
             },
         ]
@@ -413,7 +413,7 @@ def test_relatedidentifiers(minimal_json42):
             'relatedIdentifierType': 'DOI',
             'relationType': 'HasMetadata',
             'relatedMetadataScheme': 'MARC21',
-            'schemeURI': 'http://loc.gov',
+            'schemeUri': 'http://loc.gov',
             'schemeType': 'XSD',
             'resourceTypeGeneral': 'Software',
         },
@@ -468,7 +468,7 @@ def test_rights(minimal_json42):
     data = {'rightsList': [
         {
             'rights': 'CC',
-            'rightsURI': 'http://cc.org',
+            'rightsUri': 'http://cc.org',
             'lang': 'en'
         },
     ]}
@@ -506,7 +506,7 @@ def test_fundingreferences(minimal_json42):
         'funderIdentifier': 'id',
         'funderIdentifierType': 'ISNI',
         'awardNumber': '282625',
-        'awardURI': 'https://cern.ch',
+        'awardUri': 'https://cern.ch',
         'awardTitle': 'title'
     }, ]}
     validate_json(minimal_json42, data)
