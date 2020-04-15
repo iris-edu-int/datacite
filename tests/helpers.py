@@ -34,6 +34,7 @@ def get_client(username="DC", password="pw", prefix='10.5072',
         timeout=timeout,
     )
 
+
 def load_xml_path(path):
     """Helper method for loading an XML example file from a path."""
     path_base = dirname(__file__)
