@@ -28,8 +28,7 @@ tests_require = [
     'pytest-cov>=1.8.0',
     'pytest-pep8>=1.0.6',
     'pytest-runner>=2.6.2',
-    'pytest>=3.6.0',
-    'idutils'
+    'pytest>=3.6.0'
 ]
 
 extras_require = {
@@ -51,6 +50,7 @@ install_requires = [
     'jsonschema>=3.0.0',
     'lxml>=3.5.0',
     'requests>=2.4.1',
+    'idutils'
 ]
 
 packages = find_packages()
