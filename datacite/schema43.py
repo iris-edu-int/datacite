@@ -88,7 +88,7 @@ def identifiers(root, values):
         return root, doi
 
 
-def affiliations(root, values):
+def affiliation(root, values):
     """Extract affiliation."""
     vals = values.get('affiliation', [])
     for val in vals:
@@ -149,7 +149,7 @@ def creators(path, values):
         givenname(creator, value)
         familyname(creator, value)
         nameidentifiers(creator, value)
-        affiliations(creator, value)
+        affiliation(creator, value)
         root.append(creator)
 
     return root
@@ -225,7 +225,7 @@ def contributors(path, values):
         givenname(contributor, value)
         familyname(contributor, value)
         nameidentifiers(contributor, value)
-        affiliations(contributor, value)
+        affiliation(contributor, value)
         root.append(contributor)
 
     return root
