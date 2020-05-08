@@ -50,7 +50,7 @@ install_requires = [
     'jsonschema>=3.0.0',
     'lxml>=3.5.0',
     'requests>=2.4.1',
-    'idutils'
+    'idutils>=1.0.0'
 ]
 
 packages = find_packages()
