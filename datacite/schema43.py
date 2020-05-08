@@ -57,13 +57,13 @@ def validate(data):
 
 
 @rules.rule('identifiers')
-def identifiers(root, values):
+def identifiers(path, values):
     """Transform identifiers to alternateIdentifiers and identifier."""
     """
     We assume there will only be 1 DOI identifier for the record.
     Any other identifiers are alternative identifiers.
     """
-    root = ''
+    alt = ''
     doi = ''
     for value in values:
         if value['identifierType'] == 'DOI':
@@ -76,16 +76,19 @@ def identifiers(root, values):
                 identifierType='DOI'
             )
         else:
-            if root == '':
-                root = E.alternateIdentifiers()
+            if alt == '':
+                alt = E.alternateIdentifiers()
             elem = E.alternateIdentifier(value['identifier'])
             elem.set('alternateIdentifierType', value['identifierType'])
-            root.append(elem)
-    if root == '':
+            alt.append(elem)
+    if alt == '':
         #If we only have the DOI
         return doi
+    elif doi == '':
+        #If we only have alt IDs
+        return alt
     else:
-        return root, doi
+        return doi, alt
 
 
 def affiliations(root, values):
