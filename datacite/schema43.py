@@ -90,7 +90,7 @@ def identifiers(root, values):
 
 def affiliations(root, values):
     """Extract affiliation."""
-    vals = values.get('affiliation', [])
+    vals = values.get('affiliations', [])
     for val in vals:
         if val.get('name'):
             elem = E.affiliation(val['name'])
