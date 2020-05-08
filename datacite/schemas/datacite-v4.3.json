@@ -250,7 +250,7 @@
                     "givenName": {"type": "string"},
                     "familyName": {"type": "string"},
                     "nameIdentifiers": {"$ref": "#/definitions/nameIdentifiers"},
-                    "affiliation": {"$ref": "#/definitions/affiliatons"},
+                    "affiliation": {"$ref": "#/definitions/affiliations"},
                     "lang": {"type": "string"}
                 },
                 "required": ["name"]
