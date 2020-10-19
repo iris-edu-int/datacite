@@ -14,8 +14,6 @@
 API documentation is available on https://support.datacite.org/reference/introduction.
 """
 
-from __future__ import absolute_import, print_function
-
 import json
 
 from idutils import normalize_doi
@@ -110,7 +108,6 @@ class DataCiteRESTClient(object):
         body = {"data":data}
         r.post("dois", body=json.dumps(body), headers=headers)
     
-        print(r.code)
         if r.code == 201:
             return r.json['data']['id']
         else:
