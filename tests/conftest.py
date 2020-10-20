@@ -10,17 +10,15 @@
 
 """Pytest configuration."""
 
-from __future__ import absolute_import, print_function
-
 import json
-from os.path import dirname, join
-
 import pytest
 import responses
 from lxml import etree
+from os.path import dirname, join
 
 
 def pytest_addoption(parser):
+    """Add option to run tests that require password"""
     parser.addoption(
         "--runpw", action="store_true", default=False,
         help="run tests that require password"
@@ -28,6 +26,7 @@ def pytest_addoption(parser):
 
 
 def pytest_collection_modifyitems(config, items):
+    """Set up skipping for pw marked items"""
     if config.getoption("--runpw"):
         # --runslow given in cli: do not skip slow tests
         return

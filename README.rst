@@ -54,6 +54,10 @@ Running the test suite is as simple as: ::
     pip install -e .[all]
     ./run-tests.sh
 
+If you're using zsh, use this pip command instead:
+
+    pip install -e .'[all]'
+
 Some tests require a DataCite Test Account.  
 Set the following environment variables 
 $DATACITE_USER, $DATACITE_PW, $DATACITE_PREFIX 

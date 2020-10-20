@@ -58,8 +58,8 @@ def validate(data):
 
 @rules.rule('identifiers')
 def identifiers(path, values):
-    """Transform identifiers to alternateIdentifiers and identifier."""
-    """
+    """Transform identifiers to alternateIdentifiers and identifier.
+
     We assume there will only be 1 DOI identifier for the record.
     Any other identifiers are alternative identifiers.
     """
@@ -68,8 +68,8 @@ def identifiers(path, values):
     for value in values:
         if value['identifierType'] == 'DOI':
             if doi != '':
-                #Don't know what to do with two DOIs
-                #Which is the actual identifier?
+                # Don't know what to do with two DOIs
+                # Which is the actual identifier?
                 raise TypeError
             doi = E.identifier(
                 value['identifier'],
@@ -82,10 +82,10 @@ def identifiers(path, values):
             elem.set('alternateIdentifierType', value['identifierType'])
             alt.append(elem)
     if alt == '':
-        #If we only have the DOI
+        # If we only have the DOI
         return doi
     elif doi == '':
-        #If we only have alt IDs
+        # If we only have alt IDs
         return alt
     else:
         return doi, alt
@@ -97,7 +97,8 @@ def affiliation(root, values):
     for val in vals:
         if val.get('name'):
             elem = E.affiliation(val['name'])
-            # affiliationIdentifier metadata as Attributes (0-1 cardinality, instead of 0-n as list of objects)
+            # affiliationIdentifier metadata as Attributes
+            # (0-1 cardinality, instead of 0-n as list of objects)
             set_elem_attr(elem, 'affiliationIdentifier', val)
             set_elem_attr(elem, 'affiliationIdentifierScheme', val)
             if val.get('schemeUri'):
@@ -327,7 +328,7 @@ def rights(path, values):
     for value in values:
         if 'rights' in value:
             elem = E.rights(value['rights'])
-        #Handle the odd case where no rights text present
+        # Handle the odd case where no rights text present
         else:
             elem = E.rights()
         if value.get('rightsUri'):

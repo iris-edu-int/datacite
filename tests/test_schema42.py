@@ -11,11 +11,8 @@
 
 """Tests for format transformations."""
 
-from __future__ import absolute_import, print_function, unicode_literals
-
-import xml.etree.ElementTree as ET
-
 import pytest
+import xml.etree.ElementTree as ET
 from helpers import load_json_path, load_xml_path
 from lxml import etree
 

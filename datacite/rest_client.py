@@ -11,7 +11,8 @@
 
 """Python API client wrapper for the DataCite Rest API.
 
-API documentation is available on https://support.datacite.org/reference/introduction.
+API documentation is available on 
+https://support.datacite.org/reference/introduction.
 """
 
 import json
@@ -83,23 +84,22 @@ class DataCiteRESTClient(object):
         else:
             raise DataCiteError.factory(r.code, r.data)
 
-    def check_doi(self,doi):
+    def check_doi(self, doi):
         """Check doi structure.
-        
+
         Check that the doi has a form
         12.12345/123 with the prefix defined
         """
-        #If prefix is in doi
+        # If prefix is in doi
         if '/' in doi:
             split = doi.split('/')
             if split[0] != self.prefix:
-                #Provided a DOI with the wrong prefix
+                # Provided a DOI with the wrong prefix
                 raise ValueError('DOI prefix provided '+split[0]+\
                         ' not prefix in rest client '+self.prefix)
         else:
             doi = self.prefix +'/'+doi
         return normalize_doi(doi)
-
 
     def post_doi(self, data):
         """Post a new JSON payload to DataCite."""
@@ -124,7 +124,6 @@ class DataCiteRESTClient(object):
             return r.json['data']['attributes']
         else:
             raise DataCiteError.factory(r.code, r.data)
-
 
     def draft_doi(self, metadata=None, doi=None):
         """Create a draft doi.
@@ -160,7 +159,6 @@ class DataCiteRESTClient(object):
 
         result = self.put_doi(doi,data)
         return result['url']
-
     
     def delete_doi(self, doi):
         """Delete a doi.
@@ -175,7 +173,6 @@ class DataCiteRESTClient(object):
 
         if r.code != 204:
             raise DataCiteError.factory(r.code, r.data)
-
 
     def public_doi(self, metadata, url, doi=None):
         """Create a public doi.
@@ -204,7 +201,6 @@ class DataCiteRESTClient(object):
         
         return self.post_doi(data)
 
-
     def update_doi(self,doi,metadata=None,url=None):
         """Update the metadata or url for a DOI.
         
@@ -222,7 +218,6 @@ class DataCiteRESTClient(object):
         
         return self.put_doi(doi,data)
 
-
     def private_doi(self, metadata, url, doi=None):
         """Publish a doi in a registered state.
 
@@ -232,7 +227,7 @@ class DataCiteRESTClient(object):
         This DOI cannot be deleted
 
         If doi is not provided, DataCite
-        will automatically create a DOI with a random, 
+        will automatically create a DOI with a random,
         recommended DOI suffix
 
         Metadata should follow the DataCite Metadata Schema:
@@ -241,16 +236,15 @@ class DataCiteRESTClient(object):
         :param metadata: JSON format of the metadata.
         :return:
         """
-        data = {"attributes":metadata}
-        data["attributes"]["prefix"] =self.prefix
-        data["attributes"]["event"]="register"
-        data["attributes"]["url"]=url
+        data = {"attributes": metadata}
+        data["attributes"]["prefix"] = self.prefix
+        data["attributes"]["event"] = "register"
+        data["attributes"]["url"] = url
         if doi:
             doi = self.check_doi(doi)
             data["attributes"]["doi"] = doi
 
         return self.post_doi(data)
-
 
     def hide_doi(self, doi):
         """Hide a previously registered DOI.
@@ -261,13 +255,12 @@ class DataCiteRESTClient(object):
         :param doi: DOI to hide e.g. 10.12345/1.
         :return:
         """
-        data = {"attributes":{"event":"hide"}}
+        data = {"attributes": {"event": "hide"}}
         if doi:
             doi = self.check_doi(doi)
             data["attributes"]["doi"] = doi
 
-        return self.put_doi(doi,data)
-
+        return self.put_doi(doi, data)
 
     def show_doi(self, doi):
         """Show a previously registered DOI.
@@ -277,13 +270,12 @@ class DataCiteRESTClient(object):
         :param doi: DOI to hide e.g. 10.12345/1.
         :return:
         """
-        data = {"attributes":{"event":"publish"}}
+        data = {"attributes": {"event": "publish"}}
         if doi:
             doi = self.check_doi(doi)
             data["attributes"]["doi"] = doi
 
-        return self.put_doi(doi,data)
-
+        return self.put_doi(doi, data)
 
     def metadata_get(self, doi):
         """Get the JSON metadata associated to a DOI name.
@@ -300,7 +292,6 @@ class DataCiteRESTClient(object):
         else:
             raise DataCiteError.factory(r.code, r.data)
 
-
     def media_get(self, doi):
         """Get list of pairs of media type and URLs associated with a DOI.
 
@@ -314,5 +305,3 @@ class DataCiteRESTClient(object):
             return r.json['relationships']['media']
         else:
             raise DataCiteError.factory(r.code, r.data)
-
-

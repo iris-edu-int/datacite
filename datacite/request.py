@@ -11,9 +11,9 @@
 
 """Module for making requests to the DataCite MDS API."""
 
-import json
 import ssl
 
+import json
 import requests
 from requests.auth import HTTPBasicAuth
 from requests.exceptions import RequestException
