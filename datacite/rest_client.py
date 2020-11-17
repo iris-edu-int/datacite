@@ -142,7 +142,7 @@ class DataCiteRESTClient(object):
             data['attributes'] = metadata
         data["attributes"]["prefix"] = self.prefix
         if doi:
-            doi = self.check_doi(doi,self.prefix)
+            doi = self.check_doi(doi)
             data = {"attributes":{"doi":doi}}
         
         return self.post_doi(data)
