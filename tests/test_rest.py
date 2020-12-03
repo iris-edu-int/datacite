@@ -37,6 +37,21 @@ def test_rest_create_draft():
     d.delete_doi(doi)
 
 
+@pytest.mark.pw
+def test_rest_create_draft_metadata():
+    username, password, prefix = get_credentials()
+    d = get_rest(username=username, password=password,
+                 prefix=prefix, test_mode=True)
+    metadata = {"titles": [{"title": "hello world", "lang": "en"}]}
+    doi = prefix+'/12345'
+    returned_doi = d.draft_doi(metadata,doi)
+    assert returned_doi == doi
+    url = 'https://github.com/inveniosoftware/datacite'
+    returned_metadata = d.update_doi(doi, url=url)
+    assert returned_metadata['url'] == url
+    assert returned_metadata['titles'][0]['title'] == 'hello world'
+    d.delete_doi(doi)
+
 @responses.activate
 def test_rest_create_draft_mock():
     prefix = '10.1234'
